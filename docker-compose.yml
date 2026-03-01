@@ -5,10 +5,14 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      FINANCEAPP_PASSWORD: "${FINANCEAPP_PASSWORD}"
     ports:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
+      - ./docker/init-db.sql:/init-db.sql
+      - ./docker/entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
 
 volumes:
   sqlserver-data:
